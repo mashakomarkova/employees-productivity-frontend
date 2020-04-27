@@ -10,10 +10,12 @@ import Footer from "./footer/Footer";
 import Position from "./pages/Position";
 import Employee from "./pages/Employee";
 import EmployeeWorkflow from "./pages/EmployeeWorkflow";
-import WorkflowDetails from "./pages/WorkflowDetails";
+import WorkflowDetails from "./pages/workflow/WorkflowDetails";
 import TotalProductivity from "./pages/TotalProductivity";
 import EmployeeDetails from "./pages/EmployeeDetails";
 import ProductivityByGender from "./pages/ProductivityByGender";
+import NotFound from "./NotFound";
+import {withTranslation} from "react-i18next";
 
 class App extends Component {
 
@@ -22,7 +24,7 @@ class App extends Component {
         this.state = {height: props.height};
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.setState({height: window.innerHeight + 'px'});
     }
 
@@ -31,22 +33,23 @@ class App extends Component {
             <div>
                 <div className="app">
                     <BrowserRouter>
-                        <Route path="/" component={Header}/>
-                        <Switch>
-                            <Route exact path="/home" component={Main}/>
-                            <Route exact path="/reg" component={Register}/>
-                            <Route exact path="/" component={Main}/>
-                            <Route exact path="/signIn" component={SignIn}/>
-                            <Route exact path="/position" component={Position}/>
-                            <Route exact path="/employees" component={Employee}/>
-                            <Route exact path="/employeesWorkflow" component={EmployeeWorkflow}/>
-                            <Route exact path="/employeesWorkflow/info/*" component={WorkflowDetails}/>
-                            <Route exact path="/employeesProductivity" component={TotalProductivity}/>
-                            <Route exact path="/employees/info/*" component={EmployeeDetails}/>
-                            <Route exact path="/employees/byGender/" component={ProductivityByGender}/>
-                        </Switch>
-                        <Route path="/" component={Footer}/>
-                    </BrowserRouter>
+                    <Route path="/" component={Header}/>
+                    <Switch>
+                        <Route exact path="/home" component={Main}/>
+                        <Route exact path="/reg" component={Register}/>
+                        <Route exact path="/" component={Main}/>
+                        <Route exact path="/signIn" component={SignIn}/>
+                        <Route exact path="/position" component={Position}/>
+                        <Route exact path="/employees" component={Employee}/>
+                        <Route exact path="/employeesWorkflow" component={EmployeeWorkflow}/>
+                        <Route exact path="/employeesWorkflow/info/*" component={WorkflowDetails}/>
+                        <Route exact path="/employeesProductivity" component={TotalProductivity}/>
+                        <Route exact path="/employees/info/*" component={EmployeeDetails}/>
+                        <Route exact path="/employees/byGender/" component={ProductivityByGender}/>
+                        <Route path="*" component={NotFound}/>
+                    </Switch>
+                    <Route path="/" component={Footer}/>
+                </BrowserRouter>
                 </div>
             </div>
         );
@@ -54,4 +57,4 @@ class App extends Component {
 
 }
 
-export default App;
+export default withTranslation()(App);

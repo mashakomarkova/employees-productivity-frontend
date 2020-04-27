@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import Cookies from "js-cookie";
+import {withTranslation} from "react-i18next";
 
 class TotalProductivity extends Component {
 
@@ -6,6 +8,7 @@ class TotalProductivity extends Component {
 
     constructor(props) {
         super(props);
+        this.token = Cookies.get('token');
         this.state = {
             totalProductivityBean: {}
         };
@@ -25,6 +28,7 @@ class TotalProductivity extends Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Authorization': this.token
             }
         }).then((response) => response.json())
     }
@@ -35,6 +39,7 @@ class TotalProductivity extends Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Authorization': this.token
             },
         }).then((response) => response.json());
     }
@@ -53,6 +58,7 @@ class TotalProductivity extends Component {
         if (!this.state.totalProductivityBean) {
             return null;
         }
+        const {t} = this.props;
         return (
             <div className="uk-margin">
                 <div className="uk-container">
@@ -63,15 +69,13 @@ class TotalProductivity extends Component {
                         </div>
                         <button className="uk-button uk-button-primary" type="submit">Find</button>
                     </form>
-                    <h1>Total time employees worked: {this.state.totalProductivityBean.totalTime}</h1>
-                    <h1>Total sales: {this.state.totalProductivityBean.sales}</h1>
-                    <h1>Productivity per
-                        hour: {(this.state.totalProductivityBean.sales / this.state.totalProductivityBean.totalTime).toFixed(3)}
+                    <h1>{t('total time employees')}: {this.state.totalProductivityBean.totalTime}</h1>
+                    <h1>{t('total sales')}: {this.state.totalProductivityBean.sales}</h1>
+                    <h1>{t('productivity per hour')}: {(this.state.totalProductivityBean.sales / this.state.totalProductivityBean.totalTime).toFixed(3)}
                     </h1>
                 </div>
             </div>
         )
     }
 }
-
-export default TotalProductivity
+export default withTranslation()(TotalProductivity);

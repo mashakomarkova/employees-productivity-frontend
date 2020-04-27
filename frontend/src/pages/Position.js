@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import Cookies from "js-cookie";
+import {withTranslation} from "react-i18next";
 
 class Position extends Component {
 
@@ -7,9 +9,14 @@ class Position extends Component {
 
     constructor(props) {
         super(props);
+        this.token = Cookies.get('token');
         this.state = {
-            positions : []
+            positions: []
         };
+
+    }
+
+    componentDidMount() {
         this.viewAllPosition().then(positions => {
             this.setState({positions})
         });
@@ -21,6 +28,7 @@ class Position extends Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Authorization': this.token
             }
         }).then((response) => response.json())
     }
@@ -31,6 +39,7 @@ class Position extends Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Authorization': this.token
             },
             body: JSON.stringify(data)
         }).then(() => onSuccess());
@@ -44,6 +53,10 @@ class Position extends Component {
     };
 
     render() {
+        if (!this.state.positions) {
+            return null;
+        }
+        const {t} = this.props;
         return (
             <div className="uk-margin">
                 <div className="uk-container">
@@ -58,9 +71,9 @@ class Position extends Component {
                     <table className="uk-table uk-table-striped">
                         <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Position</th>
-                            <th>Edit</th>
+                            <th>{t('id')}</th>
+                            <th>{t('position')}</th>
+                            <th>{t('edit')}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -70,7 +83,9 @@ class Position extends Component {
                                     <tr>
                                         <th>{position.id}</th>
                                         <th>{position.name}</th>
-                                        <th><a onClick="">Edit</a></th>
+                                        <th>
+                                            <button onClick="">{t('edit')}</button>
+                                        </th>
                                     </tr>
                                 )
                             })}
@@ -81,5 +96,4 @@ class Position extends Component {
         )
     }
 }
-
-export default Position;
+export default withTranslation()(Position);

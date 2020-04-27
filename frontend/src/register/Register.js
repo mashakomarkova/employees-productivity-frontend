@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import '../register/Register.css'
+import {withTranslation} from "react-i18next";
 
 class Register extends Component {
 
@@ -37,31 +38,33 @@ class Register extends Component {
     };
 
     render() {
+        const {t} = this.props;
         return (
             <div className="uk-margin">
                 <div className="uk-container register">
                     <form method="post" onSubmit={this.handleSubmit}>
                         <div className="uk-margin">
+                            <label>{t('email')}</label>
                             <input className="uk-input" type="text"
                                    pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
-                                   placeholder="email" name="email"/>
+                                   name="email"/>
                         </div>
                         <div className="uk-margin">
+                            <label>{t('password')}</label>
                             <input className="uk-input" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
-                                   type="password" placeholder="password"
+                                   type="password"
                                    name="password"/>
                         </div>
                         <div className="uk-margin">
+                            <label>{t('repeat password')}</label>
                             <input className="uk-input" type="password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
-                                   placeholder="repeat password"
                                    name="repeatPassword"/>
                         </div>
-                        <button type="submit" className="uk-button uk-button-primary">Register</button>
+                        <button type="submit" className="uk-button uk-button-primary">{t('register')}</button>
                     </form>
                 </div>
             </div>
         )
     }
 }
-
-export default Register;
+export default withTranslation()(Register);

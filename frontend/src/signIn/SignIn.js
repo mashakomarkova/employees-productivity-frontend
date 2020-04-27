@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import Cookies from 'js-cookie';
+import {withTranslation} from "react-i18next";
 
 class SignIn extends Component {
 
-    employeeApi = 'http://localhost:8080/signIn';
+    employeeApi = 'http://localhost:8080/logIn';
     getUserInfo = 'http://localhost:8080/getUser';
 
     constructor(props) {
         super(props);
-        this.isLoggedIn = Cookies.get('user') != null;
+        this.isLoggedIn = Cookies.get('userForEmployee') != null;
     }
 
     signIn(data, login) {
@@ -19,9 +20,11 @@ class SignIn extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data)
-        }).then(() => {
-            login();
-        });
+        }).then((response) => response.json())
+            .then((token) => {
+                Cookies.set('token', 'Bearer_'+token.token);
+                login();
+            });
     }
 
     logUser(email, onSuccess) {
@@ -33,7 +36,7 @@ class SignIn extends Component {
             }
         }).then((response) => response.json())
             .then(data => {
-                Cookies.set('user', data);
+                Cookies.set('userForEmployee', data);
                 onSuccess();
             });
     }
@@ -41,49 +44,54 @@ class SignIn extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         let data = new FormData(event.target);
-        let email = data.get("email");
+        let username = data.get("username");
         let password = data.get("password");
-        let user = {email, password};
+        let user = {username, password};
         this.signIn(user, () => {
-            this.logUser(email, () => window.location.reload());
+            this.logUser(username, () => window.location.reload());
         });
     };
 
     renderPage() {
+        const {t} = this.props;
+
         if (!this.isLoggedIn) {
             return (
                 <div className="uk-margin">
                     <div className="uk-container">
                         <form method="post" onSubmit={this.handleSubmit}>
                             <div className="uk-margin">
-                                <input className="uk-input" type="text" name="email" placeholder="email"/>
+                                <label>{t('username')}</label>
+                                <input className="uk-input" type="text" name="username"/>
                             </div>
                             <div className="uk-margin">
-                                <input className="uk-input" type="password" name="password" placeholder="password"/>
+                                <label>{t('password')}</label>
+                                <input className="uk-input" type="password" name="password"/>
                             </div>
-                            <button type="submit" className="uk-button uk-button-primary">Login</button>
+                            <button type="submit" className="uk-button uk-button-primary">{t('login')}</button>
                         </form>
                     </div>
                 </div>
             )
         } else {
-            let user = JSON.parse(Cookies.get('user'));
+            // let user = JSON.parse(Cookies.get('userForEmployee'));
             return (
                 <div className="uk-margin">
                     <div className="uk-container">
                         <form method="post">
                             <div className="uk-margin">
-                                <input className="uk-input" type="text" name="email" placeholder="email"
-                                       value={user.email}/>
+                                <label>{t('username')}</label>
+                                <input className="uk-input" type="text" name="username"/>
                             </div>
                             <div className="uk-margin">
-                                <input className="uk-input" type="text" name="password" placeholder="password"/>
+                                <label>{t('password')}</label>
+                                <input className="uk-input" type="text" name="password"/>
                             </div>
                             <div className="uk-margin">
-                                <input className="uk-input" type="text" name="repeatPassword"
-                                       placeholder="repeat password"/>
+                                <label>{t('repeat password')}</label>
+                                <input className="uk-input" type="text" name="repeatPassword"/>
                             </div>
-                            <button type="submit" className="uk-button uk-button-primary">Update</button>
+                            <button type="submit" className="uk-button uk-button-primary">{t('update')}</button>
                         </form>
                     </div>
                 </div>
@@ -97,5 +105,4 @@ class SignIn extends Component {
         );
     }
 }
-
-export default SignIn;
+export default withTranslation()(SignIn);

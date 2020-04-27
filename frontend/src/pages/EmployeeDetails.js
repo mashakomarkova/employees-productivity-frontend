@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import Cookies from "js-cookie";
+import {withTranslation} from "react-i18next";
 
 class EmployeeDetails extends Component {
 
@@ -6,13 +8,14 @@ class EmployeeDetails extends Component {
 
     constructor(props) {
         super(props);
+        this.token = Cookies.get('token');
         this.state = {
             employeeWorkflowBean: {}
         };
     }
 
     componentDidMount() {
-        this.viewEmployeeById(window.location.href.substring(window.location.href.lastIndexOf('/')))
+        this.viewEmployeeById(window.location.href.substring(window.location.href.lastIndexOf('/')+1))
             .then(employeeWorkflowBean => {
                 this.setState({employeeWorkflowBean})
             });
@@ -24,6 +27,7 @@ class EmployeeDetails extends Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Authorization': this.token
             }
         }).then((response) => response.json())
     }
@@ -47,24 +51,27 @@ class EmployeeDetails extends Component {
             totalTime += (endTime - startTime) / (1000 * 60 * 60);
             workflow.commodityRealizations.map((realization => {
                 realizationQuantity += realization.quantity;
+                return realizationQuantity;
             }));
             totalProductivity += realizationQuantity / totalTime;
+            return totalProductivity;
         });
+        const {t} = this.props;
         return (
             <div className="uk-margin">
                 <div className="uk-container">
-                    <h1>First name {this.state.employeeWorkflowBean.employee.firstName}</h1>
-                    <h1>Last name {this.state.employeeWorkflowBean.employee.lastName}</h1>
-                    <h1>Total hours worked: {totalTime}</h1>
-                    <h1>Total sales: {realizationQuantity}</h1>
-                    <h1>Total productivity for all time: {totalProductivity.toFixed(3)}</h1>
-                    <h1>Commodity realization</h1>
+                    <h1>{t('employee first name')} {this.state.employeeWorkflowBean.employee.firstName}</h1>
+                    <h1>{t('employee last name')} {this.state.employeeWorkflowBean.employee.lastName}</h1>
+                    <h1>{t('total hours')} : {totalTime}</h1>
+                    <h1>{t('total sales')}: {realizationQuantity}</h1>
+                    <h1>{t('total productivity')}: {totalProductivity.toFixed(3)}</h1>
+                    <h1>{t('commodity realization')}</h1>
                     <table className="uk-table uk-table-striped">
                         <thead>
                         <tr>
-                            <th>Work date</th>
-                            <th>start time</th>
-                            <th>end time</th>
+                            <th>{t('work date')}</th>
+                            <th>{t('start time')}</th>
+                            <th>{t('end time')}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -86,5 +93,4 @@ class EmployeeDetails extends Component {
         )
     }
 }
-
-export default EmployeeDetails;
+export default withTranslation()(EmployeeDetails);

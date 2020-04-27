@@ -1,19 +1,24 @@
 import React, {Component} from 'react';
 import Position from "./Position";
+import Cookies from 'js-cookie';
+import {withTranslation} from "react-i18next";
+import PositionService from "../service/PositionService";
 
 class Employee extends Component {
 
-    position = new Position();
     addEmployeeApi = 'http://localhost:8080/createEmployee';
     allEmployeesApi = 'http://localhost:8080/viewAllEmployees';
+    allPositionsApi = 'http://localhost:8080/allPositions';
 
     constructor(props) {
         super(props);
-
+        this.token = Cookies.get('token');
         this.state = {
             positions: [],
             employees: []
         };
+        this.position = new PositionService(this.allPositionsApi, this.token);
+
         this.position.viewAllPosition().then(positions => {
             this.setState({positions})
         });
@@ -31,6 +36,7 @@ class Employee extends Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Authorization': this.token
             }
         }).then((response) => response.json())
     }
@@ -41,6 +47,7 @@ class Employee extends Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Authorization': this.token
             },
             body: JSON.stringify(data)
         }).then(() => onSuccess());
@@ -61,26 +68,38 @@ class Employee extends Component {
     };
 
     render() {
+        const {t} = this.props;
+
+        if (!this.state.employees) {
+            return null;
+        }
+        if (!this.state.positions) {
+            return null;
+        }
         return (
             <div className="uk-margin">
                 <div className="uk-container">
-                    Add employee
+                    {t('add employee')}
                     <form method="post" onSubmit={this.handleSubmit}>
                         <div className="uk-margin">
-                            <input className="uk-input" name="firstName" type="text" placeholder="Enter first name"/>
+                            <label>{t('first name')}</label>
+                            <input className="uk-input" name="firstName" type="text"/>
                         </div>
+                        <label>{t('last name')}</label>
                         <div className="uk-margin">
-                            <input className="uk-input" name="lastName" type="text" placeholder="Enter last name"/>
+                            <input className="uk-input" name="lastName" type="text"/>
                         </div>
+                        <label>{t('gender')}</label>
                         <div className="uk-margin">
-                            <input className="uk-input" name="gender" type="text" placeholder="Enter gender"/>
+                            <input className="uk-input" name="gender" type="text" />
                         </div>
+                        <label>{t('dateOfBirth')}</label>
                         <div className="uk-margin">
-                            <input className="uk-input" name="dateOfBirth" type="date"
-                                   placeholder="Enter date of birth"/>
+                            <input className="uk-input" name="dateOfBirth" type="date"/>
                         </div>
+                        <label>{t('enter id')}</label>
                         <div className="uk-margin">
-                            <input className="uk-input" name="userId" type="text" placeholder="Enter user id"/>
+                            <input className="uk-input" name="userId" type="text"/>
                         </div>
                         <div className="uk-margin">
                             <select name="position" className="uk-select">
@@ -89,22 +108,23 @@ class Employee extends Component {
                                         return (
                                             <option value={{
                                                 id: position.id,
-                                                name: position.name}}
+                                                name: position.name
+                                            }}
                                             >{position.name}</option>
                                         )
                                     })}
                             </select>
                         </div>
-                        <button type="submit" className="uk-button uk-button-primary">Add Employee</button>
+                        <button type="submit" className="uk-button uk-button-primary">{t('add employee')}</button>
                     </form>
 
                     <table className="uk-table uk-table-striped">
                         <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Employee first name</th>
-                            <th>Employee last name</th>
-                            <th>Details</th>
+                            <th>{t('id')}</th>
+                            <th>{t('employee first name')}</th>
+                            <th>{t('employee last name')}</th>
+                            <th>{t('details')}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -127,5 +147,4 @@ class Employee extends Component {
         )
     }
 }
-
-export default Employee;
+export default withTranslation()(Employee);
