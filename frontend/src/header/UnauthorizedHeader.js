@@ -11,13 +11,17 @@ class UnAuthorizedHeader extends Component {
         const {t} = this.props;
         return (
             <>
-                <li><a href="/reg">{t('register')}</a></li>
-                <li><a href="/signIn">{t('sign in')}</a></li>
-                <li>
-                    <a onClick={() => this.changeLanguage('ua')}>{t('ukrainian')}</a>
-                </li>
-                <li>
-                    <a onClick={() => this.changeLanguage('en')}>{t('english')}</a>
+                <li className="nav-item"><a className="nav-link" href="/reg">{t('register')}</a></li>
+                <li className="nav-item"><a className="nav-link" href="/signIn">{t('sign in')}</a></li>
+                <li className="nav-item dropdown">
+                    <a className="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_1"
+                       role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Language
+                    </a>
+                    <div className="dropdown-menu" aria-labelledby="navbarDropdown_1">
+                        <a className="dropdown-item" onClick={() => this.changeLanguage('ua')}>{t('ukrainian')}</a>
+                        <a className="dropdown-item" onClick={() => this.changeLanguage('en')}>{t('english')}</a>
+                    </div>
                 </li>
 
             </>

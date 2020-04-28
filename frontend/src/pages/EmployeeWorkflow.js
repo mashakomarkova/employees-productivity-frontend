@@ -1,17 +1,20 @@
 import React, {Component} from 'react';
 import Cookies from "js-cookie";
 import {withTranslation} from "react-i18next";
+import WorkflowLine from "../pie/WorkflowLine";
 
 class EmployeeWorkflow extends Component {
 
     employeeApi = 'http://localhost:8080/findAllWorkflows';
     employeeWorkflowByDateApi = 'http://localhost:8080/findWorkflows';
+    employeeWorkflowByTwoDatesApi = 'http://localhost:8080/findWorkflowsByDates';
 
     constructor(props) {
         super(props);
         this.token = Cookies.get('token');
         this.state = {
-            workflows: []
+            workflows: [],
+            workflowBeans: []
         };
         this.viewWorkflows()
             .then(workflows => {
@@ -46,6 +49,21 @@ class EmployeeWorkflow extends Component {
         });
     };
 
+    workflowsByTwoDates = (event) => {
+        event.preventDefault();
+        let data = new FormData(event.target);
+        return fetch(this.employeeWorkflowByTwoDatesApi+'?dateFrom='+data.get('dateFrom')+'&dateTo='+data.get('dateTo'), {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': this.token
+            },
+        }).then((response) => response.json()).then(workflowBeans => {
+            Cookies.set('workflowBeans', workflowBeans);
+            this.setState({workflowBeans})
+        }).then(()=>window.location.reload())
+    };
     render() {
         const {t} = this.props;
         return (
@@ -79,15 +97,29 @@ class EmployeeWorkflow extends Component {
                                         <th>{workflow.workDate}</th>
                                         <th>{workflow.startTime}</th>
                                         <th>{workflow.endTime}</th>
-                                        <th><a href={`/employeesWorkflow/info/${workflow.id}`}>{t('details')}</a></th>
+                                        <th><a href={`/employeesWorkflowInfo/${workflow.id}`}>{t('details')}</a></th>
                                     </tr>
                                 )
                             })}
                         </tbody>
                     </table>
+                    <form method="get" onSubmit={this.workflowsByTwoDates}>
+                        <div className="uk-margin">
+                            <label>Date from</label>
+                            <input type="date" className="uk-input" name="dateFrom"/>
+                        </div>
+                        <div className="uk-margin">
+                            <label>Date to</label>
+                            <input type="date" className="uk-input" name="dateTo"/>
+                        </div>
+                        <button className="uk-button uk-button-primary" type="submit">Find</button>
+                    </form>
+
+                    <WorkflowLine/>
                 </div>
             </div>
         )
     }
 }
+
 export default withTranslation()(EmployeeWorkflow);

@@ -60,22 +60,54 @@ class TotalProductivity extends Component {
         }
         const {t} = this.props;
         return (
-            <div className="uk-margin">
-                <div className="uk-container">
-                    <form onSubmit={this.handleSubmit} method="get">
-                        Find by date
-                        <div className="uk-margin">
-                            <input className="uk-input" type="date" name="productivityDate"/>
+            <section className="confirmation_part section_padding">
+                <div className="container">
+                    <div className="row justify-content-center">
+                        <div className="confirmation_tittle">
+                        <div className="col-lg-12">
+                        <form onSubmit={this.handleSubmit} method="get">
+                            Find by date
+                            <div className="col-md-12 form-group p_star">
+                                <input className="form-control" type="date" name="productivityDate"/>
+                            </div>
+                            <button className="btn_3" type="submit">Find</button>
+                        </form>
                         </div>
-                        <button className="uk-button uk-button-primary" type="submit">Find</button>
-                    </form>
-                    <h1>{t('total time employees')}: {this.state.totalProductivityBean.totalTime}</h1>
-                    <h1>{t('total sales')}: {this.state.totalProductivityBean.sales}</h1>
-                    <h1>{t('productivity per hour')}: {(this.state.totalProductivityBean.sales / this.state.totalProductivityBean.totalTime).toFixed(3)}
-                    </h1>
+                        </div>
+                    </div>
+                    <div className="single_confirmation_details">
+                        <div className="col-lg-6 col-lx-4">
+                            <ul>
+                                <li>
+                                    <p>
+                                        {t('total time employees')}</p>
+                                    <span>:
+                                        {this.state.totalProductivityBean.totalTime}
+                                    </span>
+
+                                </li>
+                                <li>
+                                    <p>
+                                        {t('total sales')}
+                                    </p>
+                                    <span>:
+                                        {this.state.totalProductivityBean.sales}
+                                    </span>
+                                </li>
+                                <li>
+                                    <p>
+                                        {t('productivity per hour')} </p>
+                                    <span>
+                                    : {(this.state.totalProductivityBean.sales / this.state.totalProductivityBean.totalTime).toFixed(3)}
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
         )
     }
 }
+
 export default withTranslation()(TotalProductivity);

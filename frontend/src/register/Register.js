@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import '../register/Register.css'
 import {withTranslation} from "react-i18next";
 
 class Register extends Component {
@@ -40,31 +39,35 @@ class Register extends Component {
     render() {
         const {t} = this.props;
         return (
-            <div className="uk-margin">
-                <div className="uk-container register">
-                    <form method="post" onSubmit={this.handleSubmit}>
-                        <div className="uk-margin">
-                            <label>{t('email')}</label>
-                            <input className="uk-input" type="text"
-                                   pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
-                                   name="email"/>
-                        </div>
-                        <div className="uk-margin">
-                            <label>{t('password')}</label>
-                            <input className="uk-input" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
-                                   type="password"
-                                   name="password"/>
-                        </div>
-                        <div className="uk-margin">
-                            <label>{t('repeat password')}</label>
-                            <input className="uk-input" type="password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
-                                   name="repeatPassword"/>
-                        </div>
-                        <button type="submit" className="uk-button uk-button-primary">{t('register')}</button>
-                    </form>
+            <section className="login_part section_padding">
+                <div className="container">
+                    <div className="login_part_form">
+                        <form method="post" onSubmit={this.handleSubmit}>
+                            <div className="col-md-12 form-group p_star">
+                                <label>{t('email')}</label>
+                                <input className="form-control" type="text"
+                                       pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
+                                       name="email"/>
+                            </div>
+                            <div className="col-md-12 form-group p_star">
+                                <label>{t('password')}</label>
+                                <input className="form-control" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+                                       type="password"
+                                       name="password"/>
+                            </div>
+                            <div className="col-md-12 form-group p_star">
+                                <label>{t('repeat password')}</label>
+                                <input className="form-control" type="password"
+                                       pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+                                       name="repeatPassword"/>
+                            </div>
+                            <button type="submit" className="btn_3">{t('register')}</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
+            </section>
         )
     }
 }
+
 export default withTranslation()(Register);

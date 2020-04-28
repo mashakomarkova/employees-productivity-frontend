@@ -7,10 +7,10 @@ class ManagerHeader extends Component {
         const {t} = this.props;
         return (
             <>
-                <li><a href="/employeesWorkflow">{t('employees workflow')}</a></li>
-                <li><a href="/employeesProductivity">{t('employees productivity')}</a></li>
-                <li><a href="/employees">{t('employees')}</a></li>
-                <li><a href="/employees/byGender">{t('by gender')}</a></li>
+                <li className="nav-item"><a className="nav-link" href="/employeesWorkflow">{t('employees workflow')}</a></li>
+                <li className="nav-item"><a className="nav-link" href="/employeesProductivity">{t('employees productivity')}</a></li>
+                <li className="nav-item"><a className="nav-link" href="/employees">{t('employees')}</a></li>
+                <li className="nav-item"><a className="nav-link" href="/employees/byGender">{t('by gender')}</a></li>
             </>
         );
     }

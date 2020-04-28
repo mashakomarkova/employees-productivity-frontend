@@ -43,5 +43,6 @@
   "password": "Пароль",
   "repeat password": "Повторіть пароль",
   "username": "Ім'я користувача",
-  "update": "Оновити"
+  "update": "Оновити",
+  "remove": "Видалити"
 }

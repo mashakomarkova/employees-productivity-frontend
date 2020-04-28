@@ -74,6 +74,7 @@ class Position extends Component {
                             <th>{t('id')}</th>
                             <th>{t('position')}</th>
                             <th>{t('edit')}</th>
+                            <th>{t('remove')}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -84,7 +85,10 @@ class Position extends Component {
                                         <th>{position.id}</th>
                                         <th>{position.name}</th>
                                         <th>
-                                            <button onClick="">{t('edit')}</button>
+                                            <a onClick="">{t('edit')}</a>
+                                        </th>
+                                        <th>
+                                            <a onClick="">{t('remove')}</a>
                                         </th>
                                     </tr>
                                 )

@@ -15,7 +15,7 @@ class EmployeeDetails extends Component {
     }
 
     componentDidMount() {
-        this.viewEmployeeById(window.location.href.substring(window.location.href.lastIndexOf('/')+1))
+        this.viewEmployeeById(window.location.href.substring(window.location.href.lastIndexOf('/') + 1))
             .then(employeeWorkflowBean => {
                 this.setState({employeeWorkflowBean})
             });
@@ -58,39 +58,65 @@ class EmployeeDetails extends Component {
         });
         const {t} = this.props;
         return (
-            <div className="uk-margin">
-                <div className="uk-container">
-                    <h1>{t('employee first name')} {this.state.employeeWorkflowBean.employee.firstName}</h1>
-                    <h1>{t('employee last name')} {this.state.employeeWorkflowBean.employee.lastName}</h1>
-                    <h1>{t('total hours')} : {totalTime}</h1>
-                    <h1>{t('total sales')}: {realizationQuantity}</h1>
-                    <h1>{t('total productivity')}: {totalProductivity.toFixed(3)}</h1>
-                    <h1>{t('commodity realization')}</h1>
-                    <table className="uk-table uk-table-striped">
-                        <thead>
-                        <tr>
-                            <th>{t('work date')}</th>
-                            <th>{t('start time')}</th>
-                            <th>{t('end time')}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            this.state.employeeWorkflowBean.workflows.map((workflow) => {
-                                return (
-                                    <tr>
-                                        <th>{workflow.workDate}</th>
-                                        <th>{workflow.startTime}</th>
-                                        <th>{workflow.endTime}</th>
-                                    </tr>
-                                )
-                            })
-                        }
-                        </tbody>
-                    </table>
+            <section className="confirmation_part section_padding">
+                <div className="container">
+                    <div className="row">
+                        <div className="single_confirmation_details">
+                            <div className="col-lg-12 col-lx-12">
+                                <ul>
+                                    <li>
+                                        <p>{t('employee first name')}</p>
+                                        <span>:{this.state.employeeWorkflowBean.employee.firstName}
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <p>{t('employee last name')}</p>
+                                        <span>:{this.state.employeeWorkflowBean.employee.lastName}</span>
+                                    </li>
+                                    <li>
+                                        <p>{t('total hours')}</p>  <span>: {totalTime}</span>
+                                    </li>
+                                    <li>
+                                        <p>{t('total sales')}</p><span>: {realizationQuantity}</span>
+                                    </li>
+                                    <li>
+                                        <p>{t('total productivity')}</p>
+                                        <span>:{totalProductivity.toFixed(3)}</span>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                            <p>{t('commodity realization')}</p>
+
+                            <table className="uk-table uk-table-striped">
+                                <thead>
+                                <tr>
+                                    <th>{t('work date')}</th>
+                                    <th>{t('start time')}</th>
+                                    <th>{t('end time')}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {
+                                    this.state.employeeWorkflowBean.workflows.map((workflow) => {
+                                        return (
+                                            <tr>
+                                                <th>{workflow.workDate}</th>
+                                                <th>{workflow.startTime}</th>
+                                                <th>{workflow.endTime}</th>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
         )
     }
 }
+
 export default withTranslation()(EmployeeDetails);

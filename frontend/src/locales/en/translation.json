@@ -43,5 +43,6 @@
   "password": "Password",
   "repeat password": "Repeat password",
   "username": "Username",
-  "update": "Update"
+  "update": "Update",
+  "remove": "Remove"
 }

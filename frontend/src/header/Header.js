@@ -54,16 +54,25 @@ class Header extends Component {
     render() {
         const {t} = this.props;
         return (
-            <div className="uk-navbar-container uk-navbar-transparent header">
-                <nav>
-                    <div className="uk-navbar-left">
-                        <ul className="uk-navbar-nav">
-                            <li><a href="/home">{t("home")}</a></li>
-                            {this.renderHeader()}
-                        </ul>
+            <header className="main_menu home_menu">
+                <div className="container-fluid">
+                    <div className="row align-items-center justify-content-center">
+                        <div className="col-lg-11">
+                            <nav className="navbar navbar-expand-lg navbar-light">
+                                <a className="navbar-brand" href="/"> <img src="img/logo.png" alt="logo"/>
+                                </a>
+                                <div className="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
+                                    <ul className="navbar-nav">
+                                        <li className="nav-item"><a className="nav-link" href="/home">{t("home")}</a>
+                                        </li>
+                                        {this.renderHeader()}
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
                     </div>
-                </nav>
-            </div>
+                </div>
+            </header>
         )
     }
 }

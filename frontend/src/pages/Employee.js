@@ -18,15 +18,14 @@ class Employee extends Component {
             employees: []
         };
         this.position = new PositionService(this.allPositionsApi, this.token);
-
-        this.position.viewAllPosition().then(positions => {
-            this.setState({positions})
-        });
     }
 
     componentDidMount() {
         this.viewAllEmployees().then(employees => {
             this.setState({employees})
+        });
+        this.position.viewAllPosition().then(positions => {
+            this.setState({positions})
         });
     }
 
@@ -77,74 +76,73 @@ class Employee extends Component {
             return null;
         }
         return (
-            <div className="uk-margin">
-                <div className="uk-container">
-                    {t('add employee')}
-                    <form method="post" onSubmit={this.handleSubmit}>
-                        <div className="uk-margin">
-                            <label>{t('first name')}</label>
-                            <input className="uk-input" name="firstName" type="text"/>
-                        </div>
-                        <label>{t('last name')}</label>
-                        <div className="uk-margin">
-                            <input className="uk-input" name="lastName" type="text"/>
-                        </div>
-                        <label>{t('gender')}</label>
-                        <div className="uk-margin">
-                            <input className="uk-input" name="gender" type="text" />
-                        </div>
-                        <label>{t('dateOfBirth')}</label>
-                        <div className="uk-margin">
-                            <input className="uk-input" name="dateOfBirth" type="date"/>
-                        </div>
-                        <label>{t('enter id')}</label>
-                        <div className="uk-margin">
-                            <input className="uk-input" name="userId" type="text"/>
-                        </div>
-                        <div className="uk-margin">
-                            <select name="position" className="uk-select">
-                                {
-                                    this.state.positions.map((position) => {
-                                        return (
-                                            <option value={{
-                                                id: position.id,
-                                                name: position.name
-                                            }}
-                                            >{position.name}</option>
-                                        )
-                                    })}
-                            </select>
-                        </div>
-                        <button type="submit" className="uk-button uk-button-primary">{t('add employee')}</button>
-                    </form>
+            <div className="container">
+                {t('add employee')}
+                <form method="post" onSubmit={this.handleSubmit}>
+                    <div className="col-md-12 form-group p_star">
+                        <label>{t('first name')}</label>
+                        <input className="form-control" name="firstName" type="text"/>
+                    </div>
+                    <label>{t('last name')}</label>
+                    <div className="col-md-12 form-group p_star">
+                        <input className="form-control" name="lastName" type="text"/>
+                    </div>
+                    <label>{t('gender')}</label>
+                    <div className="col-md-12 form-group p_star">
+                        <input className="form-control" name="gender" type="text"/>
+                    </div>
+                    <label>{t('dateOfBirth')}</label>
+                    <div className="col-md-12 form-group p_star">
+                        <input className="form-control" name="dateOfBirth" type="date"/>
+                    </div>
+                    <label>{t('enter id')}</label>
+                    <div className="col-md-12 form-group p_star">
+                        <input className="form-control" name="userId" type="text"/>
+                    </div>
+                    <div className="col-md-12 form-group p_star">
+                        <select name="position" className="form-control form-select">
+                            {
+                                this.state.positions.map((position) => {
+                                    return (
+                                        <option value={{
+                                            id: position.id,
+                                            name: position.name
+                                        }}
+                                        >{position.name}</option>
+                                    )
+                                })}
+                        </select>
+                    </div>
+                    <button type="submit" className="uk-button uk-button-primary">{t('add employee')}</button>
+                </form>
 
-                    <table className="uk-table uk-table-striped">
-                        <thead>
-                        <tr>
-                            <th>{t('id')}</th>
-                            <th>{t('employee first name')}</th>
-                            <th>{t('employee last name')}</th>
-                            <th>{t('details')}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            this.state.employees.map((employee) => {
-                                return (
-                                    <tr>
-                                        <th>{employee.id}</th>
-                                        <th>{employee.firstName}</th>
-                                        <th>{employee.lastName}</th>
-                                        <th><a href={`/employees/info/${employee.id}`}>Details</a></th>
-                                    </tr>
-                                )
-                            })
-                        }
-                        </tbody>
-                    </table>
-                </div>
+                <table className="uk-table uk-table-striped">
+                    <thead>
+                    <tr>
+                        <th>{t('id')}</th>
+                        <th>{t('employee first name')}</th>
+                        <th>{t('employee last name')}</th>
+                        <th>{t('details')}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        this.state.employees.map((employee) => {
+                            return (
+                                <tr>
+                                    <th>{employee.id}</th>
+                                    <th>{employee.firstName}</th>
+                                    <th>{employee.lastName}</th>
+                                    <th><a href={`/employeesInfo/${employee.id}`}>Details</a></th>
+                                </tr>
+                            )
+                        })
+                    }
+                    </tbody>
+                </table>
             </div>
         )
     }
 }
+
 export default withTranslation()(Employee);

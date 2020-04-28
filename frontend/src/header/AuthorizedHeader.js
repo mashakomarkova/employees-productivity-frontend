@@ -12,15 +12,15 @@ class AuthorizedHeader extends Component {
     logout() {
         Cookies.remove('userForEmployee');
         Cookies.remove('token');
-        window.location.reload()
+        window.location.replace("/signIn");
     }
 
     render() {
         const {t} = this.props;
         return (
             <>
-                <li><a onClick={this.logout}>{t('logout')}</a></li>
-                <li><a href="/signIn">{this.user.email}</a></li>
+                <li className="nav-item"><a className="nav-link" onClick={this.logout}>{t('logout')}</a></li>
+                <li className="nav-item"><a className="nav-link" href="/signIn">{this.user.email}</a></li>
             </>
         )
     }

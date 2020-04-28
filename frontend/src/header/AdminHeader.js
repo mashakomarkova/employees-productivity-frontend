@@ -13,8 +13,8 @@ class AdminHeader extends Component {
         const {t} = this.props;
         return (
             <>
-                <li><a href="/position">{t('add positions')}</a></li>
-                <li><a href="/employees">{t('add employee')}</a></li>
+                <li className="nav-item"><a className="nav-link" href="/position">{t('add positions')}</a></li>
+                <li className="nav-item"><a className="nav-link" href="/employees">{t('add employee')}</a></li>
             </>
         )
     }

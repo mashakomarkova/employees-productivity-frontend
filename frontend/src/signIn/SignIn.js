@@ -22,7 +22,7 @@ class SignIn extends Component {
             body: JSON.stringify(data)
         }).then((response) => response.json())
             .then((token) => {
-                Cookies.set('token', 'Bearer_'+token.token);
+                Cookies.set('token', 'Bearer_' + token.token);
                 login();
             });
     }
@@ -57,44 +57,59 @@ class SignIn extends Component {
 
         if (!this.isLoggedIn) {
             return (
-                <div className="uk-margin">
-                    <div className="uk-container">
-                        <form method="post" onSubmit={this.handleSubmit}>
-                            <div className="uk-margin">
-                                <label>{t('username')}</label>
-                                <input className="uk-input" type="text" name="username"/>
+                <section className="login_part section_padding">
+                    <div className="container">
+                        <div className="row align-items-center">
+                            <div className="col-lg-6 col-md-6">
+                                <div className="login_part_text text-center">
+                                    <div className="login_part_text_iner">
+                                        <h2>New to our Shop?</h2>
+                                        <p>There are advances being made in science and technology
+                                            everyday, and a good example of this is the</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="uk-margin">
-                                <label>{t('password')}</label>
-                                <input className="uk-input" type="password" name="password"/>
+                            <div className="col-lg-6 col-md-6">
+                                <div className="login_part_form">
+                                    <form className="row contact_form" method="post" onSubmit={this.handleSubmit}>
+                                        <div className="col-md-12 form-group p_star">
+                                            <label>{t('username')}</label>
+                                            <input className="form-control" type="text" name="username"/>
+                                        </div>
+                                        <div className="col-md-12 form-group p_star">
+                                            <label>{t('password')}</label>
+                                            <input className="form-control" type="password" name="password"/>
+                                        </div>
+                                        <button type="submit" className="btn_3">{t('login')}</button>
+                                    </form>
+                                </div>
                             </div>
-                            <button type="submit" className="uk-button uk-button-primary">{t('login')}</button>
-                        </form>
+                        </div>
                     </div>
-                </div>
+                </section>
             )
         } else {
             // let user = JSON.parse(Cookies.get('userForEmployee'));
             return (
-                <div className="uk-margin">
-                    <div className="uk-container">
+                <section className="login_part section_padding">
+                    <div className="container">
                         <form method="post">
-                            <div className="uk-margin">
+                            <div className="col-md-12 form-group p_star">
                                 <label>{t('username')}</label>
-                                <input className="uk-input" type="text" name="username"/>
+                                <input className="form-control" type="text" name="username"/>
                             </div>
-                            <div className="uk-margin">
+                            <div className="col-md-12 form-group p_star">
                                 <label>{t('password')}</label>
-                                <input className="uk-input" type="text" name="password"/>
+                                <input className="form-control" type="text" name="password"/>
                             </div>
-                            <div className="uk-margin">
+                            <div className="col-md-12 form-group p_star">
                                 <label>{t('repeat password')}</label>
-                                <input className="uk-input" type="text" name="repeatPassword"/>
+                                <input className="form-control" type="text" name="repeatPassword"/>
                             </div>
-                            <button type="submit" className="uk-button uk-button-primary">{t('update')}</button>
+                            <button type="submit" className="btn_3">{t('update')}</button>
                         </form>
                     </div>
-                </div>
+                </section>
             )
         }
     }
@@ -105,4 +120,5 @@ class SignIn extends Component {
         );
     }
 }
+
 export default withTranslation()(SignIn);

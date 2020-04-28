@@ -10,7 +10,7 @@ import Footer from "./footer/Footer";
 import Position from "./pages/Position";
 import Employee from "./pages/Employee";
 import EmployeeWorkflow from "./pages/EmployeeWorkflow";
-import WorkflowDetails from "./pages/workflow/WorkflowDetails";
+import WorkflowDetails from "./pages/WorkflowDetails";
 import TotalProductivity from "./pages/TotalProductivity";
 import EmployeeDetails from "./pages/EmployeeDetails";
 import ProductivityByGender from "./pages/ProductivityByGender";
@@ -42,9 +42,9 @@ class App extends Component {
                         <Route exact path="/position" component={Position}/>
                         <Route exact path="/employees" component={Employee}/>
                         <Route exact path="/employeesWorkflow" component={EmployeeWorkflow}/>
-                        <Route exact path="/employeesWorkflow/info/*" component={WorkflowDetails}/>
+                        <Route exact path="/employeesWorkflowInfo/*" component={WorkflowDetails}/>
                         <Route exact path="/employeesProductivity" component={TotalProductivity}/>
-                        <Route exact path="/employees/info/*" component={EmployeeDetails}/>
+                        <Route exact path="/employeesInfo/*" component={EmployeeDetails}/>
                         <Route exact path="/employees/byGender/" component={ProductivityByGender}/>
                         <Route path="*" component={NotFound}/>
                     </Switch>
